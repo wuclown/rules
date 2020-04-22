@@ -142,20 +142,20 @@ render () {
   baz='baz'
 />
 ```
-
-### 书写顺序
->在 Taro 组件中会包含类静态属性、类属性、生命周期等的类成员，其书写顺序最好遵循以下约定（顺序从上至下）
-1、static 静态方法
-2、constructor
-3、componentWillMount
-4、componentDidMount
-5、componentWillReceiveProps
-6、shouldComponentUpdate
-7、componentWillUpdate
-8、componentDidUpdate
-9、componentWillUnmount
-10、点击回调或者事件回调 比如 onClickSubmit() 或者 onChangeDescription()
-11、render
+  
+### 书写顺序.
+>在 Taro 组件中会包含类静态属性、类属性、生命周期等的类成员，其书写顺序最好遵循以下约定（顺序从上至下)  
+1、static 静态方法  
+2、constructor  
+3、componentWillMount  
+4、componentDidMount  
+5、componentWillReceiveProps  
+6、shouldComponentUpdate  
+7、componentWillUpdate  
+8、componentDidUpdate  
+9、componentWillUnmount  
+10、点击回调或者事件回调 比如 onClickSubmit() 或者 onChangeDescription()  
+11、render  
 
 
 ### 通用约束与建议
