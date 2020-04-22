@@ -5,3 +5,9 @@
 
 
 >[jsx 规范](https://github.com/wuclown/rules/blob/master/jsx.md)
+
+
+>[vs code 配置](https://github.com/wuclown/rules/blob/master/vscode.md)
+
+
+>[taro eslintrc 配置](https://github.com/wuclown/rules/blob/master/taro-eslintrc.md)
