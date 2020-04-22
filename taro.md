@@ -250,10 +250,288 @@ const user = { ['name']: 'John Doe' }   // ✗ 错误
 const user = { name: 'John Doe' }       // ✓ 正确
 ```
 
-##### 避免使用不必要的计算值作对象属性
+### 函数
+##### 不要定义冗余的函数参数
 ```
-const user = { ['name']: 'John Doe' }   // ✗ 错误
-const user = { name: 'John Doe' }       // ✓ 正确
+function sum (a, b, a) {  // ✗ 错误
+  // ...
+}
+
+function sum (a, b, c) {  // ✓ 正确
+  // ...
+}
+```
+
+##### 不要使用多余的括号包裹函数
+```
+const myFunc = (function () { })   // ✗ 错误
+const myFunc = function () { }     // ✓ 正确
+```
+
+##### 嵌套的代码块中禁止再定义函数
+```
+if (authenticated) {
+  function setAuthUser () {}    // ✗ 错误
+}
+```
+
+##### 禁止使用 Function 构造器
+```
+const sum = new Function('a', 'b', 'return a + b')    // ✗ 错误
+```
+
+##### 自调用匿名函数 (IIFEs) 使用括号包裹
+```
+const getName = function () { }()     // ✗ 错误
+
+const getName = (function () { }())   // ✓ 正确
+const getName = (function () { })()   // ✓ 正确
+```
+
+### 类定义
+##### 类名要以大写字母开头
+```
+class animal {}
+const dog = new animal()    // ✗ 错误
+
+class Animal {}
+const dog = new Animal()    // ✓ 正确
+```
+
+##### 避免对类名重新赋值
+```
+class Dog {}
+Dog = 'Fido'    // ✗ 错误
+```
+
+##### 子类的构造器中一定要调用 super
+```
+class Dog {
+  constructor () {
+    super()   // ✗ 错误
+  }
+}
+
+class Dog extends Mammal {
+  constructor () {
+    super()   // ✓ 正确
+  }
+}
+```
+
+##### 使用 this 前请确保 super() 已调用
+```
+class Dog extends Animal {
+  constructor () {
+    this.legs = 4     // ✗ 错误
+    super()
+  }
+}
+```
+
+##### 禁止多余的构造器
+```
+class Car {
+  constructor () {      // ✗ 错误
+  }
+}
+
+class Car {
+  constructor () {      // ✗ 错误
+    super()
+  }
+}
+```
+
+
+##### 无参的构造函数调用时要带上括号
+```
+function Animal () {}
+const dog = new Animal    // ✗ 错误
+const dog = new Animal()  // ✓ 正确
+```
+
+##### new 创建对象实例后需要赋值给变量
+```
+new Character()                     // ✗ 错误
+const character = new Character()   // ✓ 正确
+```
+
+### 模块
+##### 同一模块有多个导入时一次性写完
+```
+import { myFunc1 } from 'module'
+import { myFunc2 } from 'module'          // ✗ 错误
+
+import { myFunc1, myFunc2 } from 'module' // ✓ 正确
+```
+
+##### import, export 和解构操作中，禁止赋值到同名变量
+```
+import { config as config } from './config'     // ✗ 错误
+import { config } from './config'               // ✓ 正确
+```
+
+##### import, export 和解构操作中，禁止赋值到同名变量
+```
+import { config as config } from './config'     // ✗ 错误
+import { config } from './config'               // ✓ 正确
+```
+
+### 语句
+##### 避免在 return 语句中出现赋值语句
+```
+function sum (a, b) {
+  return result = a + b     // ✗ 错误
+}
+```
+
+##### 禁止使用 with
+```
+with (val) {...}    // ✗ 错误
+```
+
+##### 不要随意更改关键字的值
+```
+let undefined = 'value'     // ✗ 错误
+```
+
+##### return，throw，continue 和 break 后不要再跟代码
+```
+function doSomething () {
+  return true
+  console.log('never called')     // ✗ 错误
+}
+```
+
+### 逻辑与循环
+##### 始终使用 === 替代 ==
+>例外： obj == null 可以用来检查 null || undefined
+```
+if (name === 'John')   // ✓ 正确
+if (name == 'John')    // ✗ 错误
+if (name !== 'John')   // ✓ 正确
+if (name != 'John')    // ✗ 错误
+```
+
+##### 避免将变量与自己进行比较操作
+```
+if (score === score) {}   // ✗ 错误
+```
+
+##### 多行 if 语句的的括号不能省略
+```
+// ✓ 正确
+if (options.quiet !== true) console.log('done')
+// ✓ 正确
+if (options.quiet !== true) {
+  console.log('done')
+}
+// ✗ 错误
+if (options.quiet !== true)
+  console.log('done')
+```
+
+##### 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行
+```
+// ✓ 正确
+const location = env.development ? 'localhost' : 'www.api.com'
+
+// ✓ 正确
+const location = env.development
+  ? 'localhost'
+  : 'www.api.com'
+
+// ✗ 错误
+const location = env.development ?
+  'localhost' :
+  'www.api.com'
+```
+
+##### 请书写优雅的条件语句（avoid Yoda conditions）
+```
+if (42 === age) { }    // ✗ 错误
+if (age === 42) { }    // ✓ 正确
+```
+
+##### 循环语句中注意更新循环变量
+```
+for (let i = 0; i < items.length; j++) {...}    // ✗ 错误
+for (let i = 0; i < items.length; i++) {...}    // ✓ 正确
+```
+
+##### 如果有更好的实现，尽量不要使用三元表达式
+```
+let score = val ? val : 0     // ✗ 错误
+let score = val || 0          // ✓ 正确
+```
+
+##### switch 语句中不要定义重复的 case 分支
+```
+switch (id) {
+  case 1:
+    // ...
+  case 1:     // ✗ 错误
+}
+```
+
+##### 避免不必要的布尔转换
+```
+const result = true
+if (!!result) {   // ✗ 错误
+  // ...
+}
+
+const result = true
+if (result) {     // ✓ 正确
+  // ...
+}
+```
+
+##### 避免使用逗号操作符
+```
+if (doSomething(), !!test) {}   // ✗ 错误
+```
+
+
+### 错误处理
+##### 不要丢掉异常处理中 err 参数
+```
+// ✓ 正确
+run(function (err) {
+  if (err) throw err
+  window.alert('done')
+})
+// ✗ 错误
+run(function (err) {
+  window.alert('done')
+})
+```
+
+##### catch 中不要对错误重新赋值
+```
+try {
+  // ...
+} catch (e) {
+  e = 'new value'             // ✗ 错误
+}
+
+try {
+  // ...
+} catch (e) {
+  const newVal = 'new value'  // ✓ 正确
+}
+```
+
+##### 用 throw 抛错时，抛出 Error 对象而不是字符串
+```
+throw 'error'               // ✗ 错误
+throw new Error('error')    // ✓ 正确
+```
+
+##### 使用 Promise 一定要捕捉错误
+```
+asyncTask('google.com').catch(err => console.log(err))   // ✓ 正确
 ```
 
 
