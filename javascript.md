@@ -251,6 +251,43 @@ const user = { name: 'John Doe' }       // ✓ 正确
 ```
 
 ### 函数
+##### Promise异步数据使用async/await替换then()
+```
+// ✗ 错误
+function sum() {
+    promiseSum()
+    .then(res => {
+        const data = res.rs
+    })
+    .catch(err => console.error(err))
+}
+
+// ✓ 正确
+async function sum() {
+    try{
+      const res = await promiseSum()
+      const data = res.rs
+    }catch(err){
+        console.error(err)
+    }
+}
+```
+
+##### 函数设置默认参数
+```
+// ✗ 错误
+function sum(a,b) {
+    a = name || 10
+    b = age || 20
+    return a + b
+}
+
+// ✓ 正确
+function sum(a=10,b=20) {
+    return a + b
+}
+```
+
 ##### 不要定义冗余的函数参数
 ```
 function sum (a, b, a) {  // ✗ 错误
