@@ -27,6 +27,9 @@
 
 #### 页面注释
 插件：koroFileHeader
+>文件头部添加注释: window：ctrl+alt+i,mac：ctrl+cmd+i  
+>在光标处添加函数注释: window：ctrl+alt+t,mac：ctrl+cmd+t  
+>快捷键不可用很可能是被占用了：[参考这里](https://github.com/OBKoro1/koro1FileHeader/issues/5)  
 ```
 "fileheader.configObj": {
      // 保存自动在页面头部添加注释（jsx文件不太兼容）
