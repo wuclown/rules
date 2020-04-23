@@ -183,6 +183,19 @@ const message = 'Hello \
                  world'     // ✗ 错误
 ```
 
+##### 避免全局查找
+> 访问局部变量比全局变量快(单次访问可以省略)
+```
+// ✗ 不推荐
+const width = document.body.clientWidth
+const width = document.body.clientHeight
+
+// ✓ 推荐
+const body = document.body
+const width = body.clientWidth
+const width = body.clientHeight
+```
+
 ##### 检查 NaN 的正确姿势是使用 isNaN()
 ```
 if (price === NaN) { }      // ✗ 错误
@@ -230,6 +243,33 @@ const { a: { b } } = foo      // ✓ 正确
 ##### 不要扩展原生对象
 ```
 Object.prototype.age = 21     // ✗ 错误
+```
+
+##### 数组和对象深浅拷贝(对象同理)
+>浅拷贝：改一个，另一个也会变  
+>深拷贝：改一个，另一个不会变  
+```
+// 浅拷贝
+let list = ['a', 'b', 'c']
+let list_2 = list
+list_2[0] = 'd'
+console.log(list === list_2)  // true
+console.log(list)     // ['d', 'b', 'c']
+console.log(list_2)   // ['d', 'b', 'c']
+
+// 深拷贝
+let list = ['a', 'b', 'c']
+let list_2 = [...list]
+list_2[0] = 'd'
+console.log(list === list_2)  // false
+console.log(list)     // ['a', 'b', 'c']
+console.log(list_2)   // ['d', 'b', 'c']
+```
+
+##### 数组去重
+```
+const arr = [5, 4, 1, 9, 5, 1, 6, 5]
+const list = new Set(arr)   // [5, 4, 1, 9, 6]
 ```
 
 ##### 外部变量不要与对象属性重名
@@ -495,6 +535,32 @@ if (age === 42) { }    // ✓ 正确
 ```
 for (let i = 0; i < items.length; j++) {...}    // ✗ 错误
 for (let i = 0; i < items.length; i++) {...}    // ✓ 正确
+```
+
+##### switch语句相对if较快
+>通过将case语句按照最可能到最不可能的顺序进行组织
+```
+// ✗ 不推荐
+if(type === 'a') {
+    // ...
+}else if(type === 'b'){
+    // ...
+}else if(type === 'c'){
+    // ...
+}
+
+// ✓ 推荐
+switch(type) {
+    case 'a':
+        // ...
+        break
+    case 'b':
+        // ...
+        break
+    case 'c':
+        // ...
+        break
+}
 ```
 
 ##### 如果有更好的实现，尽量不要使用三元表达式
