@@ -1,5 +1,5 @@
 # taro eslintrc 配置
->内容涞源网络，收集整合。
+
 #### 项目搭建使用taro init myApp选择 eslintrc 检查代码规则
 ```
 {
