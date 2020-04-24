@@ -140,8 +140,6 @@
         "no-implicit-globals": 1,
         // 禁止在循环中出现 function 声明和表达式
         "no-loop-func": 1,
-        // 禁用魔术数字(3.14什么的用常量代替)
-        "no-magic-numbers": [1, { "ignore": [0, -1, 1] }],
         // 禁止在非赋值或条件语句中使用 new 操作符
         "no-new": 2,
         // 禁止对 Function 对象使用 new 操作符
